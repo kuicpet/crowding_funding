@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useStateContext } from '../context'
 import CustomButton from './CustomButton'
 import { logo, menu, search, thirdweb } from '../assets'
 import { navlinks } from '../constants'
-
-const address = 'Ox5677...'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const [isActive, setIsActive] = useState('dashboard')
   const [toggleDrawer, setToggleDrawer] = useState(false)
+  const { connect, address } = useStateContext()
 
   return (
     <div className='flex md:flex-row flex-col-reverse justify-between mb-[35px]'>
@@ -34,7 +34,7 @@ const Navbar = () => {
           styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
           handleClick={() => {
             if (address) navigate('create-campaign')
-            else 'connect()'
+            else connect()
           }}
         />
         <Link to='/profile'>
@@ -63,7 +63,9 @@ const Navbar = () => {
           onClick={() => setToggleDrawer((prev) => !prev)}
         />
         <div
-          className={`absolute top-[45px] right-0 left-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${!toggleDrawer ? '-translate-y-[100vh]' : 'translate-y-0'} transition-all duration-700`}>
+          className={`absolute top-[45px] right-0 left-0 bg-[#1c1c24] z-10 shadow-secondary py-4 ${
+            !toggleDrawer ? '-translate-y-[100vh]' : 'translate-y-0'
+          } transition-all duration-700`}>
           <ul className='mb-4'>
             {navlinks.map((link) => (
               <li
@@ -99,7 +101,7 @@ const Navbar = () => {
               styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
               handleClick={() => {
                 if (address) navigate('create-campaign')
-                else 'connect()'
+                else connect()
               }}
             />
           </div>
